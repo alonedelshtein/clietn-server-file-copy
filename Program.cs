@@ -12,8 +12,8 @@ public class Program
     const string ackMessage = "-@-";
     const string doneMessage = "@-@";
     const int bytesCountToSendMessage = 100*kb;
-    static readonly string fileSource = Path.Combine("/Users/alonedelshtein/Desktop/source",fileName);//Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),fileName);    
-    static readonly string fileDestination = Path.Combine("/Users/alonedelshtein/Desktop/dest",fileName);//Path.Combine(Path.GetTempPath(),fileName);
+    static readonly string fileSource = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),fileName);    
+    static readonly string fileDestination = Path.Combine(Path.GetTempPath(),fileName);
     
 
 
