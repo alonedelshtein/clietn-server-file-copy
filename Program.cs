@@ -11,7 +11,7 @@ public class Program
     const string uploadMode = "u";
     const string ackMessage = "-@-";
     const string doneMessage = "@-@";
-    const int bytesCountToSendMessage = 100*kb;
+    const int bytesCountToSendMessage = 100*kb;    
     static readonly string fileSource = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop),fileName);    
     static readonly string fileDestination = Path.Combine(Path.GetTempPath(),fileName);
     
@@ -145,8 +145,6 @@ public class Program
             
             using(FileStream fs = new FileStream(fileSource, FileMode.Open))
             {
-                using (StreamReader sr = new StreamReader(fs))
-                {
                     int readBytes = 0;
                     int totalReadBytes = 0;
                     int sentBytes = 0;
@@ -154,7 +152,7 @@ public class Program
                     byte[] buffer = new byte[kb];
                     int countReadBytesToMessage = 0;
                     int countSentBytesToMessage = 0;
-                    while((readBytes = sr.BaseStream.Read(buffer,0,kb)) > 0)
+                    while((readBytes = fs.Read(buffer,0,kb)) > 0)
                     {
                         totalReadBytes += readBytes;
                         countReadBytesToMessage += readBytes;
@@ -179,11 +177,11 @@ public class Program
                         if(string.Compare(recievedString,ackMessage) != 0)
                         {
                             Console.WriteLine($"Server did not ack, exist program");                            
-                            sr.Close();
+                            fs.Close();
                             break;
                         }
                     }
-                    sr.Close();
+                    fs.Close();
 
                     Console.WriteLine($"Client completed successfully to send {fileSource}");
                     
@@ -194,8 +192,7 @@ public class Program
                     Console.WriteLine("#####^^##########^^#####");
                     Console.WriteLine("#######^^######^^#######");
                     Console.WriteLine("#########^^^^^^#########");
-                    Console.WriteLine("Feel free to run and try client again ;-)");                    
-                }
+                    Console.WriteLine("Feel free to run and try client again ;-)");  
             }
             client.Shutdown(SocketShutdown.Both);
             client.Close();
